@@ -8,7 +8,8 @@ module.exports.login = async (req, res) => {
         if (user) {
             if (user.phone === phone) {
                 let token = generateToken(user)
-                res.cookie("token", token)
+                // res.cookie("token", token)
+                res.cookie('cookieName', 'cookieValue', { sameSite: 'None', secure: true });
                 res.send({ success: true, data: "You are successfully logged in" })
             }
             else {
