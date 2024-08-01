@@ -29,6 +29,7 @@ module.exports.adminIsLoggedIn = async (req, res, next) => {
 };
 module.exports.userIsLoggedIn = async (req, res, next) => {
     // Check if the cookies exist and if the token is present
+    console.log(req.cookies)
     if (!req.cookies || !req.cookies.token) {
         return res.json({ success: false, isLoggedIn:false, data: "You need to login first" });
     }
