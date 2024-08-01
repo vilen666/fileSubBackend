@@ -9,7 +9,12 @@ module.exports.login = async (req, res) => {
             if (user.phone === phone) {
                 let token = generateToken(user)
                 // res.cookie("token", token)
-                res.cookie('cookieName', 'cookieValue', { sameSite: 'None', secure: true });
+                // res.cookie('cookieName', 'cookieValue', { sameSite: 'None', secure: true,httsps });
+                res.cookie('cookieName', 'cookieValue', {
+                    httpOnly: true,
+                    secure: true,
+                    sameSite: 'None' // Ensure cookies are sent in cross-origin requests
+                  });
                 res.send({ success: true, data: "You are successfully logged in" })
             }
             else {
