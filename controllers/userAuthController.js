@@ -13,7 +13,7 @@ module.exports.login = async (req, res) => {
                 res.cookie('cookieName', 'cookieValue', {
                     httpOnly: true,
                     secure: true,
-                    sameSite: 'None' // Ensure cookies are sent in cross-origin requests
+                    sameSite: 'lax' // Ensure cookies are sent in cross-origin requests
                   });
                 res.send({ success: true, data: "You are successfully logged in" })
             }
