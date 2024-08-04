@@ -10,13 +10,12 @@ module.exports.login = async (req, res) => {
                 let token = generateToken(user)
                 // res.cookie("token", token)
                 // res.cookie('cookieName', 'cookieValue', { sameSite: 'None', secure: true,httsps });
-                res.cookie('cookieName', 'cookieValue', {
+                res.cookie("token", token, {
                     httpOnly: true,
-                    secure: true,
                     sameSite: 'lax',
                     secure:true,
                     path:"/"
-                  }); 
+                  });
                 res.send({ success: true, data: "You are successfully logged in" })
             }
             else {
