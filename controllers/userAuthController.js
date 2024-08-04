@@ -12,7 +12,7 @@ module.exports.login = async (req, res) => {
                 // res.cookie('cookieName', 'cookieValue', { sameSite: 'None', secure: true,httsps });
                 res.cookie("token", token, {
                     httpOnly: true,
-                    sameSite: 'lax',
+                    sameSite: 'None',
                     secure:true,
                     path:"/"
                   });
