@@ -57,7 +57,12 @@ module.exports.login = async (req, res) => {
             }
             else {
                 let token = generateToken(admin)
-                res.cookie("token", token,);
+                res.cookie("token", token,{
+                    httpOnly:true,
+                    secure:true,
+                    sameSite:"lax",
+                    path:"/"
+                });
                 return res.send({ success: true, data: "You are Successfully logged in" })
             }
         })
