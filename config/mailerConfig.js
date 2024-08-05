@@ -18,7 +18,6 @@ const sendEmail = (to, subject, text, html) => {
     text, // plain text body
     html // html body
   };
-
   return transporter.sendMail(mailOptions);
 };
 

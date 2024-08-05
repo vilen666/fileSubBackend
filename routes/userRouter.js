@@ -22,7 +22,7 @@ router.post('/mail', async (req, res) => {
       res.send({success:true, data: 'Email sent successfully' });
     } catch (error) {
         console.log(error.message)
-      res.send({ success:false,data: 'Contact developer'});
+      res.send({ success:false,data: error});
     }
   });
 module.exports=router
