@@ -135,7 +135,11 @@ module.exports.fetchUserPdfs = async (req, res) => {
 
 module.exports.logout=(req, res) => {
     try{
-        res.clearCookie("token")
+        res.clearCookie("token",{
+            httpOnly:true,
+            sameSite:"None",
+            secure:true,
+        })
     res.send({ success: true,data:"You are successfully logged out" })
     }
     catch(err){

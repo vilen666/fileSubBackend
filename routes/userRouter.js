@@ -22,8 +22,7 @@ router.post('/mail', async (req, res) => {
       await sendEmail(email, "File Submission", text, "");
       res.send({success:true, data: 'Email sent successfully' });
     } catch (error) {
-        console.log(error.message)
-      res.send({ success:false,data: error});
+      res.send({ success:false,data: error.message});
     }
   });
 module.exports=router
