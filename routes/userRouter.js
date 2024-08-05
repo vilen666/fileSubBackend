@@ -17,6 +17,7 @@ router.get("/logout", logout)
 
 router.post('/mail', async (req, res) => {
     const { email,text } = req.body;
+    console.log(req.body)
     try {
       await sendEmail(email, "File Submission", text, "");
       res.send({success:true, data: 'Email sent successfully' });
