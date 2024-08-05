@@ -12,10 +12,7 @@ const transporter = nodemailer.createTransport({
 // Function to send email
 const sendEmail = (to, subject, text, html) => {
   const mailOptions = {
-    from: {
-        name:"Supra",
-        address:process.env.MAIL_USER
-    }, // sender address
+    from: "Supratim", // sender address
     to, // list of receivers
     subject, // Subject line
     text, // plain text body
