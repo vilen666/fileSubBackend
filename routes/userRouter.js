@@ -1,6 +1,6 @@
 const express=require('express')
 const router = express.Router()
-
+const sendEmail =require("../config/mailerConfig")
 const { login, fetchUser,upload, fetchUserPdfs,logout } = require('../controllers/userAuthController')
 const { userIsLoggedIn } = require('../middlewares/isLoggedIn')
 const uploadMulter = require('../config/multerConfig')
