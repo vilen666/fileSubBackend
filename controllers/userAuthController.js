@@ -7,16 +7,16 @@ module.exports.login = async (req, res) => {
         let user = await userModel.findOne({ roll })
         if (user) {
             if (user.phone === phone) {
-                let token = generateToken(user)
+                let token = generateToken({_id:user._id})
                 // res.cookie("token", token)
                 // res.cookie('cookieName', 'cookieValue', { sameSite: 'None', secure: true,httsps });
-                res.cookie("token", token, {
-                    httpOnly: true,
-                    sameSite: 'None',
-                    secure:true,
-                    path:"/"
-                  });
-                res.send({ success: true, data: "You are successfully logged in" })
+                // res.cookie("token", token, {
+                //     httpOnly: true,
+                //     sameSite: 'None',
+                //     secure:true,
+                //     path:"/"
+                //   });
+                res.send({ success: true, data: "You are successfully logged in",token })
             }
             else {
                 throw new Error("Contact Developer")

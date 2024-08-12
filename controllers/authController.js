@@ -6,10 +6,8 @@ require("dotenv").config()
 
 module.exports.register = async (req, res) => {
     if (process.env.NODE_ENV === "development") {
-        let admin = await adminModel.find();
         let { username, password } = req.body
         try {
-
             bcrypt.genSalt(10, function (err, salt) {
                 if (err) {
                     res.send({ success: false, data: `Contact Developer` })
@@ -57,13 +55,13 @@ module.exports.login = async (req, res) => {
             }
             else {
                 let token = generateToken(admin)
-                res.cookie("token", token,{
-                    httpOnly:true,
-                    secure:true,
-                    sameSite:"None",
-                    path:"/"
-                });
-                return res.send({ success: true, data: "You are Successfully logged in" })
+                // res.cookie("token", token,{
+                //     httpOnly:true,
+                //     secure:true,
+                //     sameSite:"None",
+                //     path:"/"
+                // });
+                return res.send({ success: true, data: "You are Successfully logged in",token })
             }
         })
     }

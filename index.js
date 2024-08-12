@@ -25,9 +25,9 @@ require("dotenv").config();
 app.use(cors({
     origin: process.env.ORIGIN, // Allow this origin
     methods: ['GET', 'POST', 'PUT', 'DELETE'], // Allow these methods
-    credentials: true // Enable sending cookies
+    allowedHeaders: ['Content-Type', 'Authorization'],
   }));
-  
+
 app.use(express.json())
 app.use(express.urlencoded({extended:true}))
 
