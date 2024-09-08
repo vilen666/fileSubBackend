@@ -1,29 +1,33 @@
 let userModel = require("../models/user-model")
-
 let { generateToken } = require("../utils/generateToken")
 module.exports.login = async (req, res) => {
     try {
-        let { roll, phone } = req.body
-        let user = await userModel.findOne({ roll })
-        if (user) {
-            if (user.phone === phone) {
-                let token = generateToken({_id:user._id})
-                // res.cookie("token", token)
-                // res.cookie('cookieName', 'cookieValue', { sameSite: 'None', secure: true,httsps });
-                // res.cookie("token", token, {
-                //     httpOnly: true,
-                //     sameSite: 'None',
-                //     secure:true,
-                //     path:"/"
-                //   });
-                res.send({ success: true, data: "You are successfully logged in",token })
+        if (process.env.ACCEPT == "true") {
+            let { roll, phone } = req.body
+            let user = await userModel.findOne({ roll })
+            if (user) {
+                if (user.phone === phone) {
+                    let token = generateToken({ _id: user._id })
+                    // res.cookie("token", token)
+                    // res.cookie('cookieName', 'cookieValue', { sameSite: 'None', secure: true,httsps });
+                    // res.cookie("token", token, {
+                    //     httpOnly: true,
+                    //     sameSite: 'None',
+                    //     secure:true,
+                    //     path:"/"
+                    //   });
+                    res.send({ success: true, data: "You are successfully logged in", token })
+                }
+                else {
+                    throw new Error("Contact Developer")
+                }
             }
             else {
-                throw new Error("Contact Developer")
+                throw new Error("User not Found!!!")
             }
         }
         else {
-            throw new Error("User not Found!!!")
+            throw new Error("Not Accepting Responses anymore!!")
         }
 
     } catch (error) {
@@ -47,14 +51,14 @@ module.exports.upload = async (req, res) => {
             throw new Error("User Not Found")
         }
         else {
-            let temp=[]
+            let temp = []
             let oldFiles = JSON.parse(req.body.oldFiles)
             let newFiles = JSON.parse(req.body.newFiles)
             let files = req.files
             let oldUserPdfs = user.pdfs
-            let oldUserPdfsCopy=[...user.pdfs] 
+            let oldUserPdfsCopy = [...user.pdfs]
             // console.log(files);
-            let decr=0
+            let decr = 0
             oldUserPdfs.forEach((pdf, key) => {
                 if (!oldFiles.some(file => file.subcode === pdf.subcode)) {
                     if (newFiles.some(file => file.subcode === pdf.subcode)) {
@@ -79,17 +83,17 @@ module.exports.upload = async (req, res) => {
                                 break
                             }
                         }
-                        temp=[...temp,`You updated ${newFiles[flag].filename}` ]
+                        temp = [...temp, `You updated ${newFiles[flag].filename}`]
                         newFiles.splice(flag, 1)
                     }
                     else {
-                        temp=[...temp,`You deleted ${oldUserPdfsCopy[key-decr].filename}` ]
-                        oldUserPdfsCopy.splice(key-decr, 1)
-                        decr+=1
+                        temp = [...temp, `You deleted ${oldUserPdfsCopy[key - decr].filename}`]
+                        oldUserPdfsCopy.splice(key - decr, 1)
+                        decr += 1
                     }
                 }
             })
-            oldUserPdfs=[...oldUserPdfsCopy]
+            oldUserPdfs = [...oldUserPdfsCopy]
             newFiles.forEach(pdf => {
                 let data = ""
                 for (let i = 0; i < files.length; i++) {
@@ -99,19 +103,19 @@ module.exports.upload = async (req, res) => {
                         break
                     }
                 }
-                
-                        oldUserPdfs = [...oldUserPdfs,{
-                            subcode: pdf.subcode
-                            , filename: pdf.filename,
-                            contentType: pdf.contentType,
-                            data: data
-                        }]
-                        temp=[...temp,`You added ${pdf.filename}`]
+
+                oldUserPdfs = [...oldUserPdfs, {
+                    subcode: pdf.subcode
+                    , filename: pdf.filename,
+                    contentType: pdf.contentType,
+                    data: data
+                }]
+                temp = [...temp, `You added ${pdf.filename}`]
             })
-            user.pdfs=[...oldUserPdfs]
-            user=await userModel.findByIdAndUpdate({_id:user.id},user)
+            user.pdfs = [...oldUserPdfs]
+            user = await userModel.findByIdAndUpdate({ _id: user.id }, user)
             console.log(temp)
-            res.send({ success: true, data: "Uploaded successfully",list:temp })
+            res.send({ success: true, data: "Uploaded successfully", list: temp })
         }
     } catch (error) {
         console.log(error.message)
@@ -133,17 +137,17 @@ module.exports.fetchUserPdfs = async (req, res) => {
     }
 }
 
-module.exports.logout=(req, res) => {
-    try{
-        res.clearCookie("token",{
-            httpOnly:true,
-            sameSite:"None",
-            secure:true,
+module.exports.logout = (req, res) => {
+    try {
+        res.clearCookie("token", {
+            httpOnly: true,
+            sameSite: "None",
+            secure: true,
         })
-    res.send({ success: true,data:"You are successfully logged out" })
+        res.send({ success: true, data: "You are successfully logged out" })
     }
-    catch(err){
+    catch (err) {
         console.log(err);
     }
-  }
+}
 
